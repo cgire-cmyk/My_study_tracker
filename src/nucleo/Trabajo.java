@@ -1,8 +1,5 @@
 package nucleo;
 
-/**
- * Trabajo individual o grupal. Modulo 1 - Nucleo academico (Integrante 1).
- */
 public class Trabajo extends Evaluacion {
 
     private boolean esGrupal;
