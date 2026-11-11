@@ -3,16 +3,10 @@ package nucleo;
 import analisis.Alertable;
 import java.util.ArrayList;
 
-/**
- * Curso matriculado con sus evaluaciones (composicion).
- * Implementa Alertable: sabe calcular su propio nivel de riesgo.
- * Modulo 1 - Nucleo academico (Integrante 1).
- */
 public class Curso implements Alertable {
 
     public static final int CREDITOS_POR_DEFECTO = 3;
 
-    // Umbral de nota necesaria a partir del cual el riesgo es ALTO
     private static final double UMBRAL_RIESGO_ALTO = 16;
 
     private String codigo;
@@ -31,7 +25,6 @@ public class Curso implements Alertable {
         this.evaluaciones = new ArrayList<>();
     }
 
-    /** Agrega una evaluacion si su codigo no se repite y la suma de pesos no pasa de 100. */
     public boolean agregarEvaluacion(Evaluacion evaluacion) {
         if (evaluacion == null || evaluacion.getPeso() <= 0) {
             return false;
@@ -75,7 +68,6 @@ public class Curso implements Alertable {
         return Math.abs(calcularSumaPesos() - 100) < 0.001;
     }
 
-    /** Suma de los aportes de las evaluaciones ya rendidas (puntos sobre 20). */
     public double calcularPuntajeAcumulado() {
         double acumulado = 0;
         for (Evaluacion e : evaluaciones) {
@@ -86,7 +78,6 @@ public class Curso implements Alertable {
         return acumulado;
     }
 
-    /** Suma de los pesos (%) de las evaluaciones que faltan rendir. */
     public double calcularPesoPendiente() {
         double pendiente = 0;
         for (Evaluacion e : evaluaciones) {
@@ -101,7 +92,6 @@ public class Curso implements Alertable {
         return calcularSumaPesos() - calcularPesoPendiente();
     }
 
-    /** Promedio sobre 20 considerando solo lo ya rendido. 0 si aun no hay notas. */
     public double calcularPromedioActual() {
         double pesoRendido = calcularPesoRendido();
         if (pesoRendido == 0) {
@@ -110,11 +100,6 @@ public class Curso implements Alertable {
         return calcularPuntajeAcumulado() / (pesoRendido / 100.0);
     }
 
-    /**
-     * Nota uniforme que se necesita en todo lo pendiente para llegar a notaObjetivo.
-     * notaNecesaria = (notaObjetivo - puntajeAcumulado) / (pesoPendiente / 100)
-     * Devuelve 0 si la meta ya esta asegurada y un valor mayor a 20 si ya no es posible.
-     */
     public double calcularNotaNecesaria(double notaObjetivo) {
         double acumulado = calcularPuntajeAcumulado();
         double pendiente = calcularPesoPendiente();
@@ -140,11 +125,6 @@ public class Curso implements Alertable {
         return !obtenerNivelRiesgo().equals("BAJO");
     }
 
-    /**
-     * ALTO: necesita mas de 16 en lo pendiente o ya no puede aprobar.
-     * MEDIO: su promedio actual esta por debajo de la nota aprobatoria.
-     * BAJO: en los demas casos.
-     */
     @Override
     public String obtenerNivelRiesgo() {
         double necesaria = calcularNotaNecesaria(Calificacion.NOTA_APROBATORIA);
