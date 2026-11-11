@@ -1,8 +1,5 @@
 package nucleo;
 
-/**
- * Practica calificada (PC). Modulo 1 - Nucleo academico (Integrante 1).
- */
 public class PracticaCalificada extends Evaluacion {
 
     private int numeroPractica;
