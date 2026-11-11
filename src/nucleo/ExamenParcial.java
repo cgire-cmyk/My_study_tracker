@@ -1,8 +1,5 @@
 package nucleo;
 
-/**
- * Examen parcial o final de una unidad. Modulo 1 - Nucleo academico (Integrante 1).
- */
 public class ExamenParcial extends Evaluacion {
 
     private int unidad;
