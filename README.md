@@ -53,23 +53,14 @@ evaluaciones y notas, y el sistema **calcula, predice y recomienda** en tiempo r
     <td align="center" width="33%">
       <img src="https://img.shields.io/badge/Módulo%201-Núcleo%20académico-1F6FEB?style=flat-square" alt="Módulo 1"/><br/><br/>
       <b>JOSÉ JUAN CHOQUEMAMANI CALISAYA<br/><sub>Líder del equipo</sub></b><br/>
-      Código: <code>[U00000000]</code><br/>
-      <a href="https://github.com/USUARIO1">@USUARIO1</a><br/>
-      <sub>[correo@ejemplo.com]</sub>
     </td>
     <td align="center" width="33%">
       <img src="https://img.shields.io/badge/Módulo%202-Estudiante%20y%20metas-2EA043?style=flat-square" alt="Módulo 2"/><br/><br/>
       <b>ARNOLD MARCO ANTONIO CHOQUE MENDOZA</b><br/>
-      Código: <code>[U00000000]</code><br/>
-      <a href="https://github.com/USUARIO2">@USUARIO2</a><br/>
-      <sub>[correo@ejemplo.com]</sub>
     </td>
     <td align="center" width="33%">
       <img src="https://img.shields.io/badge/Módulo%203-Análisis%20y%20consola-E8590C?style=flat-square" alt="Módulo 3"/><br/><br/>
       <b>CRISTHIAN HERNÁN GIRE MAITA</b><br/>
-      Código: <code>[U00000000]</code><br/>
-      <a href="https://github.com/USUARIO3">@USUARIO3</a><br/>
-      <sub>[correo@ejemplo.com]</sub>
     </td>
   </tr>
   <tr>
@@ -117,7 +108,7 @@ git clone https://github.com/cgire-cmyk/My_study_tracker.git
 > **`src`** debe ser la carpeta de fuentes del proyecto.
 > vs code
 
-## 🗺️ Avances del proyecto
+## Avances del proyecto
 
 - [x] **Avance 1:** diagrama de clases UML
 - [x] **Avance 2:** código fuente ejecutable en consola, organizado en GitHub
