@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎓 Plataforma de Gestión y Predicción Académica
+# 🎓 MY STUDY TRACKER
 
 **Sistema en Java que ayuda al estudiante a saber cuánto necesita para aprobar, si sus metas son posibles y cómo organizar su estudio.**
 
@@ -20,21 +20,19 @@
 
 ---
 
-## 🏛️ Datos académicos
+##  Datos académicos
 
 | | |
 |---|---|
-| **Universidad** | `[Nombre de la universidad]` |
-| **Facultad / Escuela** | `[Facultad] – [Escuela profesional]` |
+| **Universidad** | `UNIVERSIDAD NACIONAL SAN AGUSTIN DE AREQUIPA` |
+| **Escuela** | `ESCUELA PROFESIONAL DE INGENIERIA DE SISTEMAS` |
 | **Curso** | Desarrollo de Software Orientado a Objetos |
-| **Docente** | `[Nombre del docente]` |
-| **Ciclo / Sección** | `[Ciclo]` – `[Sección]` |
-| **Semestre** | `[2026-II]` |
+| **Docente** | `MARCO WILFREOD AEDO LOPEZ` |
 | **Entrega** | Segundo avance: código fuente ejecutable en consola |
 
 ---
 
-## 📌 Presentación
+##  Presentación
 
 Muchos estudiantes llegan al examen final sin saber **qué nota necesitan** para aprobar un curso, o descubren
 demasiado tarde que una meta (tercio superior, quinto superior, beca) ya no era posible.
@@ -42,10 +40,10 @@ demasiado tarde que una meta (tercio superior, quinto superior, beca) ya no era 
 La **Plataforma de Gestión y Predicción Académica** resuelve ese problema: el estudiante registra sus cursos,
 evaluaciones y notas, y el sistema **calcula, predice y recomienda** en tiempo real.
 
-> 💡 **Ejemplo:** con PC1 = 12 (20%) y PC2 = 10 (20%), el sistema indica que necesitas **10.17** en el parcial
+>  **Ejemplo:** con PC1 = 12 (20%) y PC2 = 10 (20%), el sistema indica que necesitas **10.17** en el parcial
 > (60%) para aprobar, y que llegar a 17 **ya no es posible**, porque requeriría un 21.
 
-### 🎯 Objetivos
+###  Objetivos
 
 - **General:** desarrollar un sistema orientado a objetos que apoye al estudiante en el seguimiento y la predicción de su rendimiento académico.
 - **Específicos:**
@@ -56,7 +54,7 @@ evaluaciones y notas, y el sistema **calcula, predice y recomienda** en tiempo r
 
 ---
 
-## 👥 Equipo de desarrollo
+##  Equipo de desarrollo
 
 <table>
   <tr>
@@ -91,7 +89,7 @@ evaluaciones y notas, y el sistema **calcula, predice y recomienda** en tiempo r
 
 ---
 
-## ✨ Funcionalidades
+##  Funcionalidades
 
 | | Funcionalidad | Descripción |
 |:-:|---|---|
@@ -105,52 +103,15 @@ evaluaciones y notas, y el sistema **calcula, predice y recomienda** en tiempo r
 
 ---
 
-## 🏗️ Arquitectura
+##  Arquitectura
 
 El diagrama de clases UML completo está en [`docs/diagrama_clases_uml.pdf`](docs/diagrama_clases_uml.pdf).
 
-```mermaid
-classDiagram
-    direction LR
-    class Evaluacion {
-        <<abstract>>
-        +generarRecomendacion(double) String
-    }
-    class Meta {
-        <<abstract>>
-        +calcularNotaMinimaRequerida() double
-    }
-    class Alertable {
-        <<interface>>
-    }
-    class Recomendable {
-        <<interface>>
-    }
-    Estudiante o-- Curso
-    Estudiante *-- Meta
-    Estudiante *-- HorarioEstudio
-    Curso *-- Evaluacion
-    Evaluacion *-- Calificacion
-    Evaluacion <|-- PracticaCalificada
-    Evaluacion <|-- Trabajo
-    Evaluacion <|-- ExamenParcial
-    Meta <|-- MetaAprobacion
-    Meta <|-- MetaPromedio
-    HorarioEstudio *-- BloqueEstudio
-    Alertable <|.. Curso
-    Recomendable <|.. Evaluacion
-    GestorAlertas ..> Alertable
-    GestorRecomendaciones ..> Recomendable
-    InterfazConsola --> Estudiante
-```
-
-### 📁 Estructura del repositorio
+### Estructura del repositorio
 
 ```
 plataforma-academica/
 ├── 📄 README.md
-├── 📄 GUIA_GITHUB.md          Guía de trabajo en equipo con Git
-├── ▶️ ejecutar.bat / ejecutar.sh
 ├── 📂 docs/
 │   └── diagrama_clases_uml.pdf
 └── 📂 src/
@@ -223,42 +184,7 @@ Resumen: 1 ALTO, 1 MEDIO
 
 ---
 
-## 🧮 Reglas de cálculo
 
-**Nota necesaria en un curso**
-
-$$\text{notaNecesaria} = \frac{\text{notaObjetivo} - \text{puntajeAcumulado}}{\text{pesoPendiente} / 100}$$
-
-**Meta de promedio general:** la misma idea, aplicada a todos los cursos y ponderada por créditos.
-
-| Regla | Valor actual | Configurable en |
-|---|---|---|
-| Escala de notas | 0 – 20 | `Calificacion.NOTA_MINIMA` / `NOTA_MAXIMA` |
-| Nota aprobatoria | 10.5 | `Calificacion.NOTA_APROBATORIA` |
-| 🔴 Riesgo ALTO | Necesita más de 16, o ya no puede aprobar | `Curso.UMBRAL_RIESGO_ALTO` |
-| 🟡 Riesgo MEDIO | Promedio actual menor que 10.5 | `Curso.obtenerNivelRiesgo()` |
-| 🟢 Riesgo BAJO | Demás casos | — |
-| Horas de estudio | 1 por crédito, +3 si ALTO, +1 si MEDIO | `HorarioEstudio` |
-
----
-
-## 🧠 Conceptos de POO aplicados
-
-| Concepto | Aplicación en el sistema |
-|---|---|
-| **Encapsulamiento** | Atributos `private` con getters; `protected` solo en clases abstractas. |
-| **Abstracción y herencia** | `Evaluacion` → `PracticaCalificada`, `Trabajo`, `ExamenParcial` · `Meta` → `MetaAprobacion`, `MetaPromedio` |
-| **Polimorfismo** | `generarRecomendacion()`, `getTipo()` y `calcularNotaMinimaRequerida()` se comportan distinto en cada subclase. |
-| **Sobrecarga** | Constructores sobrecargados; `registrarNota(nota)` y `registrarNota(nota, observacion)`. |
-| **Interfaces** | `Alertable` (la implementa `Curso`) y `Recomendable` (la implementa `Evaluacion`). |
-| **Composición** | `Curso` ◆ `Evaluacion` ◆ `Calificacion` · `Estudiante` ◆ `HorarioEstudio`, `Meta` |
-| **Agregación** | `Estudiante` ◇ `Curso` · `MetaPromedio` ◇ `Curso` |
-| **Asociación** | `MetaAprobacion`, `BloqueEstudio` y `Alerta` → `Curso` |
-| **Miembros `static`** | Constantes de escala, `esNotaValida()`, `DIAS[]`, `main` |
-| **Estructuras de datos** | `ArrayList`, `HashMap<String, Integer>`, arreglos `String[]` e `int[][]` |
-| **Separación de responsabilidades** | Solo `InterfazConsola` lee e imprime; las clases de cálculo no usan `Scanner` ni `System.out`. |
-
----
 
 ## 🗺️ Avances del proyecto
 
