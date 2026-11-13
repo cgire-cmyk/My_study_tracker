@@ -9,12 +9,7 @@
 ![Consola](https://img.shields.io/badge/Interfaz-Consola-2EA043?style=for-the-badge)
 ![Estado](https://img.shields.io/badge/Estado-2.º%20avance-8250DF?style=for-the-badge)
 
-[Presentación](#-presentación) •
-[Equipo](#-equipo-de-desarrollo) •
-[Funcionalidades](#-funcionalidades) •
-[Arquitectura](#-arquitectura) •
-[Ejecución](#-cómo-ejecutar) •
-[POO aplicada](#-conceptos-de-poo-aplicados)
+
 
 </div>
 
@@ -24,10 +19,11 @@
 
 | | |
 |---|---|
-| **Universidad** | `UNIVERSIDAD NACIONAL SAN AGUSTIN DE AREQUIPA` |
-| **Escuela** | `ESCUELA PROFESIONAL DE INGENIERIA DE SISTEMAS` |
+| **Universidad** | Universidad Nacional de San Agustín de Arequipa |
+| **Escuela profesional** | Ingeniería de Sistemas (EPIS) |
 | **Curso** | Desarrollo de Software Orientado a Objetos |
-| **Docente** | `MARCO WILFREOD AEDO LOPEZ` |
+| **Docente** | ING. MARCO WILFREDO AEDO LOPEZ |
+| **Semestre** | 2026-II |
 | **Entrega** | Segundo avance: código fuente ejecutable en consola |
 
 ---
@@ -39,9 +35,6 @@ demasiado tarde que una meta (tercio superior, quinto superior, beca) ya no era 
 
 La **Plataforma de Gestión y Predicción Académica** resuelve ese problema: el estudiante registra sus cursos,
 evaluaciones y notas, y el sistema **calcula, predice y recomienda** en tiempo real.
-
->  **Ejemplo:** con PC1 = 12 (20%) y PC2 = 10 (20%), el sistema indica que necesitas **10.17** en el parcial
-> (60%) para aprobar, y que llegar a 17 **ya no es posible**, porque requeriría un 21.
 
 ###  Objetivos
 
@@ -56,52 +49,7 @@ evaluaciones y notas, y el sistema **calcula, predice y recomienda** en tiempo r
 
 ##  Equipo de desarrollo
 
-<table>
-  <tr>
-    <td align="center" width="33%">
-      <img src="https://img.shields.io/badge/Módulo%201-Núcleo%20académico-1F6FEB?style=flat-square" alt="Módulo 1"/><br/><br/>
-      <b>[Nombres y Apellidos]</b><br/>
-      Código: <code>[U00000000]</code><br/>
-      <a href="https://github.com/USUARIO1">@USUARIO1</a><br/>
-      <sub>[correo@ejemplo.com]</sub>
-    </td>
-    <td align="center" width="33%">
-      <img src="https://img.shields.io/badge/Módulo%202-Estudiante%20y%20metas-2EA043?style=flat-square" alt="Módulo 2"/><br/><br/>
-      <b>[Nombres y Apellidos]</b><br/>
-      Código: <code>[U00000000]</code><br/>
-      <a href="https://github.com/USUARIO2">@USUARIO2</a><br/>
-      <sub>[correo@ejemplo.com]</sub>
-    </td>
-    <td align="center" width="33%">
-      <img src="https://img.shields.io/badge/Módulo%203-Análisis%20y%20consola-E8590C?style=flat-square" alt="Módulo 3"/><br/><br/>
-      <b>[Nombres y Apellidos]</b><br/>
-      Código: <code>[U00000000]</code><br/>
-      <a href="https://github.com/USUARIO3">@USUARIO3</a><br/>
-      <sub>[correo@ejemplo.com]</sub>
-    </td>
-  </tr>
-  <tr>
-    <td valign="top"><sub><code>Curso</code>, <code>Evaluacion</code>, <code>PracticaCalificada</code>, <code>Trabajo</code>, <code>ExamenParcial</code>, <code>Calificacion</code></sub></td>
-    <td valign="top"><sub><code>Estudiante</code>, <code>Meta</code>, <code>MetaAprobacion</code>, <code>MetaPromedio</code>, <code>HorarioEstudio</code>, <code>BloqueEstudio</code></sub></td>
-    <td valign="top"><sub><code>Alertable</code>, <code>Recomendable</code>, <code>Alerta</code>, <code>GestorAlertas</code>, <code>GestorRecomendaciones</code>, <code>InterfazConsola</code>, <code>Main</code></sub></td>
-  </tr>
-</table>
 
----
-
-##  Funcionalidades
-
-| | Funcionalidad | Descripción |
-|:-:|---|---|
-| 📚 | **Gestión de cursos** | Registro de cursos, créditos y evaluaciones (prácticas, trabajos y exámenes) con su peso. |
-| 📝 | **Registro de notas** | Validación de la escala 0–20 y control de que los pesos sumen 100%. |
-| 🧮 | **Nota necesaria** | Calcula cuánto necesitas en lo que falta rendir para aprobar o para llegar a una nota objetivo. |
-| 🎯 | **Metas académicas** | Metas por curso o por promedio general ponderado (tercio, quinto superior, beca). Indica si son alcanzables o imposibles. |
-| 🚨 | **Alertas de riesgo** | Clasifica cada curso en riesgo **ALTO**, **MEDIO** o **BAJO**. |
-| 💬 | **Recomendaciones** | Consejos distintos según el tipo de evaluación pendiente. |
-| 🗓️ | **Horario de estudio** | Reparte las horas de la semana según créditos, riesgo y disponibilidad diaria. |
-
----
 
 ##  Arquitectura
 
@@ -122,49 +70,6 @@ plataforma-academica/
 ```
 
 ---
-
-## 🚀 Cómo ejecutar
-
-**Requisito:** JDK 8 o superior (`java -version`).
-
-<details open>
-<summary><b>🪟 Windows</b></summary>
-
-```bat
-ejecutar.bat
-```
-</details>
-
-<details>
-<summary><b>🐧 Linux / 🍎 macOS</b></summary>
-
-```bash
-chmod +x ejecutar.sh
-./ejecutar.sh
-```
-</details>
-
-<details>
-<summary><b>⌨️ Manual (cualquier sistema)</b></summary>
-
-```bash
-javac -encoding UTF-8 -d bin src/nucleo/*.java src/planificacion/*.java src/analisis/*.java src/consola/*.java
-java -cp bin consola.Main
-```
-</details>
-
-<details>
-<summary><b>🧩 Desde un IDE (NetBeans / IntelliJ)</b></summary>
-
-Abre la carpeta como proyecto Java, marca `src` como carpeta de fuentes y ejecuta `consola.Main`.
-</details>
-
-> 🧪 El sistema inicia con **datos de prueba ficticios** que muestran todos los casos (riesgo ALTO, MEDIO y BAJO,
-> y metas alcanzables e imposibles). Para iniciar sin datos: `java -cp bin consola.Main --vacio`
-
-### 🖥️ Vista previa
-
-```
 ==============================================
  PLATAFORMA DE GESTION Y PREDICCION ACADEMICA
 ==============================================
@@ -193,12 +98,4 @@ Resumen: 1 ALTO, 1 MEDIO
 - [ ] **Avance 3:** `[por definir]`
 - [ ] **Entrega final:** `[por definir]`
 
----
 
-<div align="center">
-
-**`[Nombre de la universidad]`** · Desarrollo de Software Orientado a Objetos · `[2026-II]`
-
-<sub>Proyecto académico desarrollado con fines educativos. Los datos de prueba son ficticios.</sub>
-
-</div>
