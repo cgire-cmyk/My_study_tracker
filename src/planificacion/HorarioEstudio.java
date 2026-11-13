@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import nucleo.Curso;
 
+public class HorarioEstudio {
     public static final String[] DIAS = {
         "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO"
     };
