@@ -7,7 +7,7 @@
 ![Java](https://img.shields.io/badge/Java-8%2B-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![POO](https://img.shields.io/badge/Paradigma-POO-1F6FEB?style=for-the-badge)
 ![Consola](https://img.shields.io/badge/Interfaz-Consola-2EA043?style=for-the-badge)
-![Estado](https://img.shields.io/badge/Estado-2.º%20avance-8250DF?style=for-the-badge)
+![Estado](https://img.shields.io/badge/Estado-3.º%20avance-8250DF?style=for-the-badge)
 
 
 
@@ -24,7 +24,7 @@
 | **Curso** | Desarrollo de Software Orientado a Objetos |
 | **Docente** | ING. MARCO WILFREDO AEDO LOPEZ |
 | **Semestre** | 2026-II |
-| **Entrega** | Segundo avance: código fuente ejecutable en consola |
+| **Entrega** | Tercer avance: Interfaces graficas|
 
 ---
 
@@ -79,11 +79,7 @@ El diagrama de clases UML completo está en [`docs/diagrama_clases_uml.pdf`](doc
 
 ```
 mystudytracker/
-├── 📄 README.md
-├── 📄 GUIA_GITHUB.md                 Guía de trabajo en equipo con Git
-├── 📄 .gitignore
-├── 📂 .vscode/
-│   └── settings.json                 Configuración para abrir en VS Code
+├── 📄 README.md              
 ├── 📂 docs/
 │   ├── diagrama_clases_uml.pdf       Diagrama de clases (Sprint 1)
 └── 📂 src/
@@ -134,16 +130,16 @@ git clone https://github.com/cgire-cmyk/My_study_tracker.git
 
 ### 2️ Ejecutar
 
-> La clase principal es **`consola.Main`**, en `src/consola/Main.java`.
-> Las clases están organizadas en paquetes (`nucleo`, `planificacion`, `analisis`, `consola`), así que la carpeta
+> La clase principal es **`gui.Main`**, en `src/gui/Main.java`.
+> Las clases están organizadas en paquetes (`nucleo`, `planificacion`, `analisis`, `gui`), así que la carpeta
 > **`src`** debe ser la carpeta de fuentes del proyecto.
-> vs code
+
 
 ## Avances del proyecto
 
 - [x] **Avance 1:** diagrama de clases UML
 - [x] **Avance 2:** código fuente ejecutable en consola, organizado en GitHub
-- [ ] **Avance 3:** `[por definir]`
+- [x] **Avance 3:** Interfaz Grafica
 - [ ] **Entrega final:** `[por definir]`
 
 
