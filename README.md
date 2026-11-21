@@ -59,14 +59,9 @@ evaluaciones y notas, y el sistema **calcula, predice y recomienda** en tiempo r
       <b>ARNOLD MARCO ANTONIO CHOQUE MENDOZA</b><br/>
     </td>
     <td align="center" width="33%">
-      <img src="https://img.shields.io/badge/Módulo%203-Análisis%20y%20consola-E8590C?style=flat-square" alt="Módulo 3"/><br/><br/>
+      <img src="https://img.shields.io/badge/Módulo%203-Análisis%20y%20gui-E8590C?style=flat-square" alt="Módulo 3"/><br/><br/>
       <b>CRISTHIAN HERNÁN GIRE MAITA</b><br/>
     </td>
-  </tr>
-  <tr>
-    <td valign="top"><sub><code>Curso</code>, <code>Evaluacion</code>, <code>PracticaCalificada</code>, <code>Trabajo</code>, <code>ExamenParcial</code>, <code>Calificacion</code></sub></td>
-    <td valign="top"><sub><code>Estudiante</code>, <code>Meta</code>, <code>MetaAprobacion</code>, <code>MetaPromedio</code>, <code>HorarioEstudio</code>, <code>BloqueEstudio</code></sub></td>
-    <td valign="top"><sub><code>Alertable</code>, <code>Recomendable</code>, <code>Alerta</code>, <code>GestorAlertas</code>, <code>GestorRecomendaciones</code>, <code>InterfazConsola</code>, <code>Main</code></sub></td>
   </tr>
 </table>
 
