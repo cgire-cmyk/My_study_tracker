@@ -1,4 +1,5 @@
 package analisis;
+
 import nucleo.Curso;
 
 public class Alerta {

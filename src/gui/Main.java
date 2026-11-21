@@ -1,4 +1,4 @@
-package consola;
+package gui;
 
 import nucleo.Curso;
 import nucleo.ExamenParcial;
@@ -18,11 +18,9 @@ public class Main {
         } else {
             estudiante = cargarDatosDePrueba();
         }
-        InterfazConsola consola = new InterfazConsola(estudiante);
-        consola.iniciar();
+        new VentanaPrincipal(estudiante);
     }
 
-    /** Datos ficticios para demostrar todos los casos: riesgo ALTO, MEDIO, BAJO y metas imposibles. */
     private static Estudiante cargarDatosDePrueba() {
         Estudiante est = new Estudiante("U2024-0001", "Ana Torres Quispe", "Ingenieria de Sistemas");
 
@@ -75,4 +73,3 @@ public class Main {
         return est;
     }
 }
-

@@ -3,8 +3,8 @@ package planificacion;
 import java.util.ArrayList;
 import java.util.HashMap;
 import nucleo.Curso;
-
 public class HorarioEstudio {
+
     public static final String[] DIAS = {
         "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO"
     };
@@ -29,6 +29,10 @@ public class HorarioEstudio {
         }
         horasDisponibles.put(clave, horas);
         return true;
+    }
+    public int getHorasDisponibles(String dia) {
+        Integer horas = horasDisponibles.get(dia.trim().toUpperCase());
+        return (horas == null) ? 0 : horas;
     }
 
     public void generarHorario(ArrayList<Curso> cursos) {
@@ -62,7 +66,7 @@ public class HorarioEstudio {
                 }
             }
         }
-       
+
         for (int d = 0; d < DIAS.length; d++) {
             for (int c = 0; c < cursos.size(); c++) {
                 if (asignadas[c][d] > 0) {
@@ -105,3 +109,4 @@ public class HorarioEstudio {
         return bloques;
     }
 }
+
