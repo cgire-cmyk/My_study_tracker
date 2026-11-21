@@ -86,14 +86,6 @@ mystudytracker/
 │   └── settings.json                 Configuración para abrir en VS Code
 ├── 📂 docs/
 │   ├── diagrama_clases_uml.pdf       Diagrama de clases (Sprint 1)
-│   └── 📂 capturas/                  Capturas de la interfaz gráfica (Sprint 3)
-│       ├── 01_ventana_principal.png
-│       ├── 02_resumen_cursos.png
-│       ├── 03_registrar_evaluacion.png
-│       ├── 04_registrar_nota.png
-│       ├── 05_metas.png
-│       ├── 06_alertas_recomendaciones.png
-│       └── 07_horario_estudio.png
 └── 📂 src/
     ├── 📂 nucleo/                    Módulo 1 · Núcleo académico
     │   ├── Calificacion.java
@@ -124,10 +116,8 @@ mystudytracker/
     │   ├── VentanaRegistroNota.java
     │   ├── VentanaMetas.java
     │   ├── VentanaHorario.java
-    │   └── VentanaAlertas.java
-    └── 📂 consola/                   Versión de consola (Sprint 2)
-        ├── InterfazConsola.java
-        └── Main.java
+        └── VentanaAlertas.java
+
 ```
 
 ## Como ejecutar
