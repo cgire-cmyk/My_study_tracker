@@ -78,16 +78,60 @@ El diagrama de clases UML completo está en [`docs/diagrama_clases_uml.pdf`](doc
 ### Estructura del repositorio
 
 ```
-plataforma-academica/
+mystudytracker/
 ├── 📄 README.md
+├── 📄 GUIA_GITHUB.md                 Guía de trabajo en equipo con Git
+├── 📄 .gitignore
+├── 📂 .vscode/
+│   └── settings.json                 Configuración para abrir en VS Code
 ├── 📂 docs/
-│   └── diagrama_clases_uml.pdf
+│   ├── diagrama_clases_uml.pdf       Diagrama de clases (Sprint 1)
+│   └── 📂 capturas/                  Capturas de la interfaz gráfica (Sprint 3)
+│       ├── 01_ventana_principal.png
+│       ├── 02_resumen_cursos.png
+│       ├── 03_registrar_evaluacion.png
+│       ├── 04_registrar_nota.png
+│       ├── 05_metas.png
+│       ├── 06_alertas_recomendaciones.png
+│       └── 07_horario_estudio.png
 └── 📂 src/
-    ├── 📂 nucleo/             Módulo 1 · Núcleo académico
-    ├── 📂 planificacion/      Módulo 2 · Estudiante, metas y horario
-    ├── 📂 analisis/           Módulo 3 · Alertas y recomendaciones
-    └── 📂 consola/            Módulo 3 · Interfaz de consola y Main
+    ├── 📂 nucleo/                    Módulo 1 · Núcleo académico
+    │   ├── Calificacion.java
+    │   ├── Curso.java
+    │   ├── Evaluacion.java
+    │   ├── ExamenParcial.java
+    │   ├── PracticaCalificada.java
+    │   └── Trabajo.java
+    ├── 📂 planificacion/             Módulo 2 · Estudiante, metas y horario
+    │   ├── BloqueEstudio.java
+    │   ├── Estudiante.java
+    │   ├── HorarioEstudio.java
+    │   ├── Meta.java
+    │   ├── MetaAprobacion.java
+    │   └── MetaPromedio.java
+    ├── 📂 analisis/                  Módulo 3 · Alertas y recomendaciones
+    │   ├── Alerta.java
+    │   ├── Alertable.java
+    │   ├── GestorAlertas.java
+    │   ├── GestorRecomendaciones.java
+    │   └── Recomendable.java
+    ├── 📂 gui/                       Interfaz gráfica con Java Swing (Sprint 3)
+    │   ├── Main.java                 ▶ Clase principal del programa
+    │   ├── VentanaPrincipal.java
+    │   ├── VentanaResumen.java
+    │   ├── VentanaRegistroCurso.java
+    │   ├── VentanaRegistroEvaluacion.java
+    │   ├── VentanaRegistroNota.java
+    │   ├── VentanaMetas.java
+    │   ├── VentanaHorario.java
+    │   └── VentanaAlertas.java
+    └── 📂 consola/                   Versión de consola (Sprint 2)
+        ├── InterfazConsola.java
+        └── Main.java
 ```
+
+> Para abrir la interfaz gráfica, ejecuta **`gui.Main`**. La carpeta `consola` conserva la versión
+> del Sprint 2, que se ejecuta con `consola.Main`.
 
 ## Como ejecutar
 
