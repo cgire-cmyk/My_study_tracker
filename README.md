@@ -130,9 +130,6 @@ mystudytracker/
         └── Main.java
 ```
 
-> Para abrir la interfaz gráfica, ejecuta **`gui.Main`**. La carpeta `consola` conserva la versión
-> del Sprint 2, que se ejecuta con `consola.Main`.
-
 ## Como ejecutar
 
 ### 1️ Descargar el proyecto
