@@ -7,7 +7,7 @@
 ![Java](https://img.shields.io/badge/Java-8%2B-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![POO](https://img.shields.io/badge/Paradigma-POO-1F6FEB?style=for-the-badge)
 ![Consola](https://img.shields.io/badge/Interfaz-Consola-2EA043?style=for-the-badge)
-![Estado](https://img.shields.io/badge/Estado-3.º%20avance-8250DF?style=for-the-badge)
+![Estado](https://img.shields.io/badge/Estado-4.º%20avance-8250DF?style=for-the-badge)
 
 
 
@@ -72,44 +72,53 @@ El diagrama de clases UML completo está en [`docs/diagrama_clases_uml.pdf`](doc
 
 ### Estructura del repositorio
 
-```
-mystudytracker/
-├── 📄 README.md              
-├── 📂 docs/
-│   ├── diagrama_clases_uml.pdf       Diagrama de clases (Sprint 1)
-└── 📂 src/
-    ├── 📂 nucleo/                    Módulo 1 · Núcleo académico
-    │   ├── Calificacion.java
-    │   ├── Curso.java
-    │   ├── Evaluacion.java
-    │   ├── ExamenParcial.java
-    │   ├── PracticaCalificada.java
-    │   └── Trabajo.java
-    ├── 📂 planificacion/             Módulo 2 · Estudiante, metas y horario
-    │   ├── BloqueEstudio.java
-    │   ├── Estudiante.java
-    │   ├── HorarioEstudio.java
-    │   ├── Meta.java
-    │   ├── MetaAprobacion.java
-    │   └── MetaPromedio.java
-    ├── 📂 analisis/                  Módulo 3 · Alertas y recomendaciones
-    │   ├── Alerta.java
-    │   ├── Alertable.java
-    │   ├── GestorAlertas.java
-    │   ├── GestorRecomendaciones.java
-    │   └── Recomendable.java
-    ├── 📂 gui/                       Interfaz gráfica con Java Swing (Sprint 3)
-    │   ├── Main.java                 ▶ Clase principal del programa
-    │   ├── VentanaPrincipal.java
-    │   ├── VentanaResumen.java
-    │   ├── VentanaRegistroCurso.java
-    │   ├── VentanaRegistroEvaluacion.java
-    │   ├── VentanaRegistroNota.java
-    │   ├── VentanaMetas.java
-    │   ├── VentanaHorario.java
-        └── VentanaAlertas.java
+## 📁 Estructura del proyecto
 
 ```
+My_study_tracker/
+├── docs/                     
+│    ├── diagrama_clases_uml.pdf       Diagrama de clases (Sprint 1)
+├── src/
+│   ├── nucleo/                    Módulo 1 · Cursos, evaluaciones y notas
+│   │   ├── Curso.java
+│   │   ├── Evaluacion.java            (abstracta)
+│   │   ├── PracticaCalificada.java
+│   │   ├── Trabajo.java
+│   │   ├── ExamenParcial.java
+│   │   ├── Calificacion.java
+│   │   └── DatoInvalidoException.java
+│   ├── planificacion/             Módulo 2 · Estudiante, metas, horario y archivo
+│   │   ├── Estudiante.java
+│   │   ├── Meta.java                  (abstracta)
+│   │   ├── MetaAprobacion.java
+│   │   ├── MetaPromedio.java
+│   │   ├── HorarioEstudio.java
+│   │   ├── BloqueEstudio.java
+│   │   ├── ArchivoDatos.java
+│   │   └── DatosDePrueba.java
+│   ├── analisis/                  Módulo 3 · Alertas y recomendaciones
+│   │   ├── Alertable.java             (interfaz)
+│   │   ├── Recomendable.java          (interfaz)
+│   │   ├── Alerta.java
+│   │   ├── GestorAlertas.java
+│   │   ├── GestorRecomendaciones.java
+│   │   └── PreferenciasAlertas.java
+│   └── gui/                       Interfaz gráfica con Java Swing
+│       ├── Aplicacion.java            (main: punto de entrada)
+│       ├── VentanaPrincipal.java      (JFrame)
+│       ├── PanelBase.java             (abstracta)
+│       ├── Paleta.java
+│       ├── PanelInicio.java
+│       ├── PanelCursos.java
+│       ├── PanelMetas.java
+│       ├── PanelHorario.java
+│       ├── PanelAlertas.java
+│       └── PanelRecomendaciones.java
+└── README.md
+
+```
+
+La primera vez se cargan datos de prueba ficticios. Cada cambio se guarda automáticamente en `mystudytracker_datos.txt`.
 
 ## Como ejecutar
 
@@ -125,7 +134,7 @@ git clone https://github.com/cgire-cmyk/My_study_tracker.git
 
 ### 2️ Ejecutar
 
-> La clase principal es **`gui.Main`**, en `src/gui/Main.java`.
+> La clase principal es **`gui.Aplicación`**, en `src/gui/Aplicación.java`.
 > Las clases están organizadas en paquetes (`nucleo`, `planificacion`, `analisis`, `gui`), así que la carpeta
 > **`src`** debe ser la carpeta de fuentes del proyecto.
 
@@ -135,6 +144,7 @@ git clone https://github.com/cgire-cmyk/My_study_tracker.git
 - [x] **Avance 1:** diagrama de clases UML
 - [x] **Avance 2:** código fuente ejecutable en consola, organizado en GitHub
 - [x] **Avance 3:** Interfaz Grafica
+- [x] **Avance 4:** Interfaz Grafica mas .txt
 - [ ] **Entrega final:** `[por definir]`
 
 
