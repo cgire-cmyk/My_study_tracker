@@ -1,48 +1,68 @@
 package planificacion;
 
+import analisis.Alertable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import nucleo.Curso;
-public class HorarioEstudio {
+import nucleo.DatoInvalidoException;
 
+public class HorarioEstudio {
     public static final String[] DIAS = {
         "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO"
     };
+    public static final String[] DIAS_VISIBLES = {
+        "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"
+    };
 
-    private static final int MAX_HORAS_DIA = 12;
+    public static final int MAX_HORAS_DIA = 12;
 
     private HashMap<String, Integer> horasDisponibles;
     private ArrayList<BloqueEstudio> bloques;
+    private int horasSinAsignar;
 
     public HorarioEstudio() {
         this.horasDisponibles = new HashMap<>();
         this.bloques = new ArrayList<>();
+        this.horasSinAsignar = 0;
         for (String dia : DIAS) {
             horasDisponibles.put(dia, 0);
         }
     }
 
-    public boolean definirDisponibilidad(String dia, int horas) {
+    public void definirDisponibilidad(String dia, int horas) throws DatoInvalidoException {
         String clave = dia.trim().toUpperCase();
-        if (!horasDisponibles.containsKey(clave) || horas < 0 || horas > MAX_HORAS_DIA) {
-            return false;
+        if (!horasDisponibles.containsKey(clave)) {
+            throw new DatoInvalidoException("El día " + dia + " no existe.");
+        }
+        if (horas < 0 || horas > MAX_HORAS_DIA) {
+            throw new DatoInvalidoException("Las horas del " + dia.toLowerCase()
+                    + " deben estar entre 0 y " + MAX_HORAS_DIA + ".");
         }
         horasDisponibles.put(clave, horas);
-        return true;
     }
+
     public int getHorasDisponibles(String dia) {
         Integer horas = horasDisponibles.get(dia.trim().toUpperCase());
         return (horas == null) ? 0 : horas;
     }
 
+    public int calcularTotalDisponible() {
+        int total = 0;
+        for (String dia : DIAS) {
+            total += horasDisponibles.get(dia);
+        }
+        return total;
+    }
+
     public void generarHorario(ArrayList<Curso> cursos) {
         bloques.clear();
+        horasSinAsignar = 0;
         int[] libres = new int[DIAS.length];
         for (int i = 0; i < DIAS.length; i++) {
             libres[i] = horasDisponibles.get(DIAS[i]);
         }
         int[][] asignadas = new int[cursos.size()][DIAS.length];
-        String[] prioridades = {"ALTO", "MEDIO", "BAJO"};
+        String[] prioridades = {Alertable.RIESGO_ALTO, Alertable.RIESGO_MEDIO, Alertable.RIESGO_BAJO};
         int diaActual = 0;
 
         for (String nivel : prioridades) {
@@ -64,6 +84,7 @@ public class HorarioEstudio {
                     }
                     diaActual = (diaActual + 1) % DIAS.length;
                 }
+                horasSinAsignar += porAsignar;
             }
         }
 
@@ -94,19 +115,35 @@ public class HorarioEstudio {
         return total;
     }
 
-    private int calcularHorasRecomendadas(Curso curso) {
+    public int calcularHorasAsignadas(Curso curso) {
+        int total = 0;
+        for (BloqueEstudio b : bloques) {
+            if (b.getCurso() == curso) {
+                total += b.getHoras();
+            }
+        }
+        return total;
+    }
+
+    public int calcularHorasRecomendadas(Curso curso) {
+        if (curso.estaTerminado()) {
+            return 0;
+        }
         int horas = curso.getCreditos();
         String nivel = curso.obtenerNivelRiesgo();
-        if (nivel.equals("ALTO")) {
+        if (nivel.equals(Alertable.RIESGO_ALTO)) {
             horas += 3;
-        } else if (nivel.equals("MEDIO")) {
+        } else if (nivel.equals(Alertable.RIESGO_MEDIO)) {
             horas += 1;
         }
         return horas;
+    }
+
+    public int getHorasSinAsignar() {
+        return horasSinAsignar;
     }
 
     public ArrayList<BloqueEstudio> getBloques() {
         return bloques;
     }
 }
-

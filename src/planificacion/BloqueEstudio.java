@@ -2,12 +2,10 @@ package planificacion;
 
 import nucleo.Curso;
 
-
 public class BloqueEstudio {
-
     private String dia;
     private int horas;
-    private Curso curso;  
+    private Curso curso;
 
     public BloqueEstudio(String dia, int horas, Curso curso) {
         this.dia = dia;

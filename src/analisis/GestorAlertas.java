@@ -5,6 +5,9 @@ import nucleo.Calificacion;
 import nucleo.Curso;
 
 public class GestorAlertas {
+    private static final String[] ORDEN_NIVELES = {
+        Alertable.RIESGO_ALTO, Alertable.RIESGO_MEDIO, Alertable.RIESGO_BAJO
+    };
 
     private ArrayList<Alerta> alertas;
 
@@ -13,15 +16,28 @@ public class GestorAlertas {
     }
 
     public ArrayList<Alerta> generarAlertas(ArrayList<Curso> cursos) {
+        return generarAlertas(cursos, new PreferenciasAlertas());
+    }
+
+    public ArrayList<Alerta> generarAlertas(ArrayList<Curso> cursos, PreferenciasAlertas preferencias) {
         alertas.clear();
-        for (Curso curso : cursos) {
-            Alertable alertable = curso;   // se usa el curso a traves de la interfaz
-            if (alertable.estaEnRiesgo()) {
-                String nivel = alertable.obtenerNivelRiesgo();
-                alertas.add(new Alerta(curso, nivel, construirMensaje(curso, nivel)));
+        for (String nivel : ORDEN_NIVELES) {
+            if (!preferencias.debeMostrar(nivel)) {
+                continue;
+            }
+            for (Curso curso : cursos) {
+                Alertable alertable = curso;
+                if (alertable.obtenerNivelRiesgo().equals(nivel)) {
+                    alertas.add(evaluarCurso(curso));
+                }
             }
         }
         return alertas;
+    }
+
+    public Alerta evaluarCurso(Curso curso) {
+        String nivel = curso.obtenerNivelRiesgo();
+        return new Alerta(curso, nivel, construirMensaje(curso, nivel));
     }
 
     private String construirMensaje(Curso curso, String nivel) {
@@ -29,10 +45,21 @@ public class GestorAlertas {
         if (necesaria > Calificacion.NOTA_MAXIMA) {
             return "ya no es posible aprobar con las evaluaciones registradas.";
         }
-        String texto = "necesitas " + String.format("%.2f", necesaria)
+        if (nivel.equals(Alertable.RIESGO_BAJO)) {
+            if (!curso.tieneNotas()) {
+                return "aún no tiene notas registradas.";
+            }
+            if (necesaria == 0) {
+                return "¡aprobado asegurado! Promedio actual "
+                        + Calificacion.formatear(curso.calcularPromedioActual()) + ".";
+            }
+            return "vas bien: promedio actual " + Calificacion.formatear(curso.calcularPromedioActual())
+                    + "; necesitas " + Calificacion.formatear(necesaria) + " en lo pendiente.";
+        }
+        String texto = "necesitas " + Calificacion.formatear(necesaria)
                 + " en lo que falta rendir para aprobar";
-        if (nivel.equals("MEDIO")) {
-            texto += " (promedio actual " + String.format("%.2f", curso.calcularPromedioActual()) + ")";
+        if (nivel.equals(Alertable.RIESGO_MEDIO)) {
+            texto += " (promedio actual " + Calificacion.formatear(curso.calcularPromedioActual()) + ")";
         }
         return texto + ".";
     }
@@ -51,5 +78,3 @@ public class GestorAlertas {
         return alertas;
     }
 }
-
-

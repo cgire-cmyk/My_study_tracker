@@ -4,56 +4,78 @@ import analisis.Alertable;
 import java.util.ArrayList;
 
 public class Curso implements Alertable {
-
     public static final int CREDITOS_POR_DEFECTO = 3;
+    public static final int CREDITOS_MINIMOS = 1;
+    public static final int CREDITOS_MAXIMOS = 8;
+    public static final double PESO_TOTAL = 100;
+    public static final int LARGO_MAXIMO_CODIGO = 10;
+    public static final int LARGO_MAXIMO_NOMBRE = 50;
 
     private static final double UMBRAL_RIESGO_ALTO = 16;
+    private static final double TOLERANCIA = 0.001;
 
     private String codigo;
     private String nombre;
     private int creditos;
     private ArrayList<Evaluacion> evaluaciones;
 
-    public Curso(String codigo, String nombre) {
+    public Curso(String codigo, String nombre) throws DatoInvalidoException {
         this(codigo, nombre, CREDITOS_POR_DEFECTO);
     }
 
-    public Curso(String codigo, String nombre, int creditos) {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.creditos = (creditos > 0) ? creditos : CREDITOS_POR_DEFECTO;
+    public Curso(String codigo, String nombre, int creditos) throws DatoInvalidoException {
+        this.codigo = Evaluacion.validarTexto(codigo, "código del curso", LARGO_MAXIMO_CODIGO).toUpperCase();
+        setNombre(nombre);
+        setCreditos(creditos);
         this.evaluaciones = new ArrayList<>();
     }
 
-    public boolean agregarEvaluacion(Evaluacion evaluacion) {
-        if (evaluacion == null || evaluacion.getPeso() <= 0) {
-            return false;
+    public void agregarEvaluacion(Evaluacion evaluacion) throws DatoInvalidoException {
+        if (evaluacion == null) {
+            throw new DatoInvalidoException("No se recibió ninguna evaluación.");
         }
         if (buscarEvaluacion(evaluacion.getCodigo()) != null) {
-            return false;
+            throw new DatoInvalidoException("Ya existe una evaluación con el código "
+                    + evaluacion.getCodigo() + " en " + nombre + ".");
         }
-        if (calcularSumaPesos() + evaluacion.getPeso() > 100 + 0.001) {
-            return false;
+        if (evaluacion.getPeso() > calcularPesoDisponible() + TOLERANCIA) {
+            throw new DatoInvalidoException("El peso de " + evaluacion.getCodigo() + " ("
+                    + Evaluacion.formatearPeso(evaluacion.getPeso()) + " %) supera lo que queda libre en "
+                    + nombre + " (" + Evaluacion.formatearPeso(calcularPesoDisponible()) + " %).");
         }
         evaluaciones.add(evaluacion);
+    }
+
+    public boolean eliminarEvaluacion(String codigoEvaluacion) {
+        Evaluacion e = buscarEvaluacion(codigoEvaluacion);
+        if (e == null) {
+            return false;
+        }
+        evaluaciones.remove(e);
         return true;
     }
 
-    public Evaluacion buscarEvaluacion(String codigo) {
+    public Evaluacion buscarEvaluacion(String codigoEvaluacion) {
         for (Evaluacion e : evaluaciones) {
-            if (e.getCodigo().equalsIgnoreCase(codigo)) {
+            if (e.getCodigo().equalsIgnoreCase(codigoEvaluacion.trim())) {
                 return e;
             }
         }
         return null;
     }
 
-    public boolean registrarNota(String codigoEvaluacion, double nota) {
+    public void registrarNota(String codigoEvaluacion, double nota) throws DatoInvalidoException {
+        registrarNota(codigoEvaluacion, nota, "");
+    }
+
+    public void registrarNota(String codigoEvaluacion, double nota, String observacion)
+            throws DatoInvalidoException {
         Evaluacion e = buscarEvaluacion(codigoEvaluacion);
         if (e == null) {
-            return false;
+            throw new DatoInvalidoException("No existe la evaluación " + codigoEvaluacion
+                    + " en " + nombre + ".");
         }
-        return e.registrarNota(nota);
+        e.registrarNota(nota, observacion);
     }
 
     public double calcularSumaPesos() {
@@ -64,8 +86,34 @@ public class Curso implements Alertable {
         return suma;
     }
 
+    public double calcularPesoDisponible() {
+        return Math.max(0, PESO_TOTAL - calcularSumaPesos());
+    }
+
     public boolean pesosCompletos() {
-        return Math.abs(calcularSumaPesos() - 100) < 0.001;
+        return Math.abs(calcularSumaPesos() - PESO_TOTAL) < TOLERANCIA;
+    }
+
+    public double calcularPesoRendido() {
+        double rendido = 0;
+        for (Evaluacion e : evaluaciones) {
+            if (e.estaRendida()) {
+                rendido += e.getPeso();
+            }
+        }
+        return rendido;
+    }
+
+    public double calcularPesoPendiente() {
+        return PESO_TOTAL - calcularPesoRendido();
+    }
+
+    public boolean tieneNotas() {
+        return calcularPesoRendido() > 0;
+    }
+
+    public boolean estaTerminado() {
+        return pesosCompletos() && obtenerEvaluacionesPendientes().isEmpty();
     }
 
     public double calcularPuntajeAcumulado() {
@@ -76,20 +124,6 @@ public class Curso implements Alertable {
             }
         }
         return acumulado;
-    }
-
-    public double calcularPesoPendiente() {
-        double pendiente = 0;
-        for (Evaluacion e : evaluaciones) {
-            if (!e.estaRendida()) {
-                pendiente += e.getPeso();
-            }
-        }
-        return pendiente;
-    }
-
-    private double calcularPesoRendido() {
-        return calcularSumaPesos() - calcularPesoPendiente();
     }
 
     public double calcularPromedioActual() {
@@ -103,8 +137,8 @@ public class Curso implements Alertable {
     public double calcularNotaNecesaria(double notaObjetivo) {
         double acumulado = calcularPuntajeAcumulado();
         double pendiente = calcularPesoPendiente();
-        if (pendiente == 0) {
-            return (acumulado >= notaObjetivo) ? 0 : Calificacion.NOTA_MAXIMA + 1;
+        if (pendiente < TOLERANCIA) {
+            return (acumulado + TOLERANCIA >= notaObjetivo) ? 0 : Calificacion.NOTA_MAXIMA + 1;
         }
         double necesaria = (notaObjetivo - acumulado) / (pendiente / 100.0);
         return Math.max(0, necesaria);
@@ -122,19 +156,19 @@ public class Curso implements Alertable {
 
     @Override
     public boolean estaEnRiesgo() {
-        return !obtenerNivelRiesgo().equals("BAJO");
+        return !obtenerNivelRiesgo().equals(RIESGO_BAJO);
     }
 
     @Override
     public String obtenerNivelRiesgo() {
         double necesaria = calcularNotaNecesaria(Calificacion.NOTA_APROBATORIA);
         if (necesaria > UMBRAL_RIESGO_ALTO) {
-            return "ALTO";
+            return RIESGO_ALTO;
         }
-        if (calcularPesoRendido() > 0 && calcularPromedioActual() < Calificacion.NOTA_APROBATORIA) {
-            return "MEDIO";
+        if (tieneNotas() && calcularPromedioActual() < Calificacion.NOTA_APROBATORIA) {
+            return RIESGO_MEDIO;
         }
-        return "BAJO";
+        return RIESGO_BAJO;
     }
 
     public String getCodigo() {
@@ -145,11 +179,28 @@ public class Curso implements Alertable {
         return nombre;
     }
 
+    public void setNombre(String nombre) throws DatoInvalidoException {
+        this.nombre = Evaluacion.validarTexto(nombre, "nombre del curso", LARGO_MAXIMO_NOMBRE);
+    }
+
     public int getCreditos() {
         return creditos;
     }
 
+    public void setCreditos(int creditos) throws DatoInvalidoException {
+        if (creditos < CREDITOS_MINIMOS || creditos > CREDITOS_MAXIMOS) {
+            throw new DatoInvalidoException("Los créditos deben estar entre "
+                    + CREDITOS_MINIMOS + " y " + CREDITOS_MAXIMOS + ".");
+        }
+        this.creditos = creditos;
+    }
+
     public ArrayList<Evaluacion> getEvaluaciones() {
         return evaluaciones;
+    }
+
+    @Override
+    public String toString() {
+        return codigo + " - " + nombre;
     }
 }

@@ -3,8 +3,7 @@ package analisis;
 import nucleo.Curso;
 
 public class Alerta {
-
-    private Curso curso;   // asociacion
+    private Curso curso;
     private String nivel;
     private String mensaje;
 
